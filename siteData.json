@@ -11,7 +11,7 @@
         "zee": "Zee",
         "chong-yi": "Chong Yi",
         "maximus-tan": "Maximus Tan",
-        "james-doe": "James Doe"
+        "divya-lath": "Divya Lath"
       },
       "headingKeywords": {}
     },
@@ -144,6 +144,11 @@
     },
     {
       "src": "team/chongyi.md",
+      "headings": {},
+      "headingKeywords": {}
+    },
+    {
+      "src": "team/divya.md",
       "headings": {},
       "headingKeywords": {}
     },
