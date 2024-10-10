@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -11,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.GradingSystem.GradingSystem;
 import seedu.address.model.person.Person;
 
 /**
@@ -21,6 +23,7 @@ public class ModelManager implements Model {
 
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
+    private final GradingSystem gradingSystem;
     private final FilteredList<Person> filteredPersons;
 
     /**
@@ -34,6 +37,8 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.gradingSystem = new GradingSystem();
+
     }
 
     public ModelManager() {
@@ -145,4 +150,25 @@ public class ModelManager implements Model {
                 && filteredPersons.equals(otherModelManager.filteredPersons);
     }
 
+    @Override
+    public void addStudentGrade(String studentName, double score) {
+        gradingSystem.addStudentGrade(studentName, score);
+    }
+
+    @Override
+    public String getLetterGrade(String studentName) {
+        return gradingSystem.getLetterGrade(studentName);
+    }
+
+    @Override
+    public double getStudentScore(String studentName) {
+        return gradingSystem.getStudentScore(studentName);
+    }
+
+    @Override
+    public Map<String, Double> getAllGrades() {
+        return gradingSystem.getAllGrades();
+    }
+
 }
+

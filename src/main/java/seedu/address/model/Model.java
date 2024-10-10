@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import java.nio.file.Path;
+import java.util.Map;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -84,4 +85,8 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+    void addStudentGrade(String studentName, double score);
+    String getLetterGrade(String studentName);
+    double getStudentScore(String studentName);
+    Map<String, Double> getAllGrades();
 }
