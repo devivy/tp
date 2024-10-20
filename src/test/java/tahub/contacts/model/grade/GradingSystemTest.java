@@ -2,6 +2,7 @@ package tahub.contacts.model.grade;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static tahub.contacts.testutil.Assert.assertThrows;
 
 import java.util.Map;
 
@@ -81,5 +82,16 @@ class GradingSystemTest {
         gradingSystem.setAssessmentWeight("Final", 0.5);
 
         assertEquals(86.0, gradingSystem.getOverallScore(), 0.001);
+    }
+
+    @Test
+    void testExcessiveWeights() {
+        gradingSystem.addGrade("Assignment1", 90.0);
+        gradingSystem.addGrade("Assignment2", 80.0);
+
+        gradingSystem.setAssessmentWeight("Assignment1", 0.6);
+        gradingSystem.setAssessmentWeight("Assignment2", 0.6);
+
+        assertThrows(IllegalStateException.class, () -> gradingSystem.getOverallScore());
     }
 }

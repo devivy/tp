@@ -144,6 +144,16 @@ public class StudentCourseAssociation {
     }
 
     /**
+     * Retrieves all assessment weights for this student's course.
+     *
+     * @return A Map containing all assessment names and their corresponding weights.
+     *         If no weights have been set, returns an empty Map.
+     */
+    public Map<String, Double> getAllWeights() {
+        return grades.getAllWeights();
+    }
+
+    /**
      * Retrieves all assessment grades.
      *
      * @return a Map containing all assessment names and their corresponding scores

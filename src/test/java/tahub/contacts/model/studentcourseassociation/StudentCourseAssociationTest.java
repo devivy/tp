@@ -241,4 +241,44 @@ class StudentCourseAssociationTest {
                 new HashSet<>()
         );
     }
+
+    @Test
+    void testSetAndGetAssessmentWeight() {
+        StudentCourseAssociation sca = createTestSCA();
+        sca.setAssessmentWeight("Midterm", 0.4);
+        sca.setAssessmentWeight("Final", 0.6);
+
+        Map<String, Double> weights = sca.getAllWeights();
+        assertEquals(2, weights.size());
+        assertEquals(0.4, weights.get("Midterm"), 0.001);
+        assertEquals(0.6, weights.get("Final"), 0.001);
+    }
+
+    @Test
+    void testGetAllWeights() {
+        StudentCourseAssociation sca = createTestSCA();
+        sca.setAssessmentWeight("Midterm", 0.4);
+        sca.setAssessmentWeight("Final", 0.6);
+
+        Map<String, Double> weights = sca.getAllWeights();
+        assertEquals(2, weights.size());
+        assertTrue(weights.containsKey("Midterm"));
+        assertTrue(weights.containsKey("Final"));
+        assertEquals(0.4, weights.get("Midterm"), 0.001);
+        assertEquals(0.6, weights.get("Final"), 0.001);
+    }
+
+    private StudentCourseAssociation createTestSCA() {
+        Person student = new Person(
+                new MatriculationNumber("A1234567A"),
+                new Name("Test Student"),
+                new Phone("12345678"),
+                new Email("test@example.com"),
+                new Address("Test Address"),
+                new HashSet<>()
+        );
+        Course course = new Course("IS1131", "Financial Management");
+        Tutorial tutorial = new Tutorial("T1", course);
+        return new StudentCourseAssociation(student, course, tutorial);
+    }
 }
