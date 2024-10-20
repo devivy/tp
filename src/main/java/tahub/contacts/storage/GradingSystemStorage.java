@@ -41,10 +41,12 @@ public class GradingSystemStorage {
         ObjectNode weightsNode = (ObjectNode) rootNode.get("weights");
 
         scoresNode.fields().forEachRemaining(entry ->
-                                                     gradingSystem.addGrade(entry.getKey(), entry.getValue().asDouble()));
+                                                     gradingSystem.addGrade(entry.getKey(),
+                                                                            entry.getValue().asDouble()));
 
         weightsNode.fields().forEachRemaining(entry ->
-                                                      gradingSystem.setAssessmentWeight(entry.getKey(), entry.getValue().asDouble()));
+                                                      gradingSystem.setAssessmentWeight(entry.getKey(),
+                                                                                        entry.getValue().asDouble()));
 
         return gradingSystem;
     }
