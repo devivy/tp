@@ -1,14 +1,15 @@
 package tahub.contacts.storage;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import tahub.contacts.model.grade.GradingSystem;
 
 import java.io.File;
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import tahub.contacts.model.grade.GradingSystem;
 
 /**
  * Test class for GradingSystemStorage.
