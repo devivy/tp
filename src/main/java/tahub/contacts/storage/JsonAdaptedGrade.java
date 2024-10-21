@@ -4,14 +4,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import tahub.contacts.commons.exceptions.IllegalValueException;
+import tahub.contacts.model.grade.Grade;
 
 /**
- * Jackson-friendly version of a grade entry.
+ * Jackson-friendly version of {@link Grade}.
  */
 class JsonAdaptedGrade {
 
     private final String assessmentName;
-    private final double score;
+    private final double scorePercentage;
     private final double weight;
 
     /**
@@ -19,42 +20,37 @@ class JsonAdaptedGrade {
      */
     @JsonCreator
     public JsonAdaptedGrade(@JsonProperty("assessmentName") String assessmentName,
-                            @JsonProperty("score") double score,
+                            @JsonProperty("scorePercentage") double scorePercentage,
                             @JsonProperty("weight") double weight) {
         this.assessmentName = assessmentName;
-        this.score = score;
+        this.scorePercentage = scorePercentage;
         this.weight = weight;
     }
 
-    public String getAssessmentName() {
-        return assessmentName;
-    }
-
-    public double getScore() {
-        return score;
-    }
-
-    public double getWeight() {
-        return weight;
+    /**
+     * Converts a given {@code Grade} into this class for Jackson use.
+     */
+    public JsonAdaptedGrade(Grade source) {
+        this.assessmentName = source.getAssessmentName();
+        this.scorePercentage = source.getScorePercentage();
+        this.weight = source.getWeight();
     }
 
     /**
-     * Converts this Jackson-friendly adapted grade object into the model's grade data.
+     * Converts this Jackson-friendly adapted grade object into the model's {@code Grade} object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted grade.
      */
-    public void toModelType(tahub.contacts.model.grade.GradingSystem gradingSystem) throws IllegalValueException {
+    public Grade toModelType() throws IllegalValueException {
         if (assessmentName == null || assessmentName.trim().isEmpty()) {
             throw new IllegalValueException("Assessment name cannot be null or empty.");
         }
-        if (score < 0 || score > 100) {
-            throw new IllegalValueException("Score must be between 0 and 100.");
+        if (scorePercentage < 0 || scorePercentage > 100) {
+            throw new IllegalValueException("Score percentage must be between 0 and 100.");
         }
         if (weight < 0 || weight > 1) {
             throw new IllegalValueException("Weight must be between 0 and 1.");
         }
-
-        gradingSystem.addGrade(assessmentName, score);
-        gradingSystem.setAssessmentWeight(assessmentName, weight);
+        return new Grade(assessmentName, scorePercentage, weight);
     }
 }

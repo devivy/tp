@@ -2,12 +2,14 @@ package tahub.contacts.storage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import tahub.contacts.commons.exceptions.IllegalValueException;
+import tahub.contacts.model.grade.Grade;
 import tahub.contacts.model.grade.GradingSystem;
 
 /**
@@ -16,7 +18,7 @@ import tahub.contacts.model.grade.GradingSystem;
 @JsonRootName(value = "gradingsystem")
 class JsonSerializableGradingSystem {
 
-    final List<JsonAdaptedGrade> grades = new ArrayList<>();
+    private final List<JsonAdaptedGrade> grades = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonSerializableGradingSystem} with the given grades.
@@ -28,14 +30,14 @@ class JsonSerializableGradingSystem {
 
     /**
      * Converts a given {@code GradingSystem} into this class for Jackson use.
-     *
-     * @param source future changes to this will not affect the created {@code JsonSerializableGradingSystem}.
      */
     public JsonSerializableGradingSystem(GradingSystem source) {
-        source.getAllGrades().forEach((assessmentName, score) -> {
-            double weight = source.getAllWeights().getOrDefault(assessmentName, 1.0);
-            grades.add(new JsonAdaptedGrade(assessmentName, score, weight));
-        });
+        grades.addAll(source.getAllGrades().entrySet().stream()
+                              .map(entry -> new JsonAdaptedGrade(new Grade(entry.getKey(), entry.getValue(),
+                                                                           source.getAllWeights()
+                                                                                   .getOrDefault(entry.getKey(),
+                                                                                                 1.0))))
+                              .collect(Collectors.toList()));
     }
 
     /**
@@ -46,7 +48,9 @@ class JsonSerializableGradingSystem {
     public GradingSystem toModelType() throws IllegalValueException {
         GradingSystem gradingSystem = new GradingSystem();
         for (JsonAdaptedGrade jsonAdaptedGrade : grades) {
-            jsonAdaptedGrade.toModelType(gradingSystem);
+            Grade grade = jsonAdaptedGrade.toModelType();
+            gradingSystem.addGrade(grade.getAssessmentName(), grade.getScorePercentage());
+            gradingSystem.setAssessmentWeight(grade.getAssessmentName(), grade.getWeight());
         }
         return gradingSystem;
     }
