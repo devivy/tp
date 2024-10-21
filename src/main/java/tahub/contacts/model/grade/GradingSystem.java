@@ -93,4 +93,14 @@ public class GradingSystem {
     public Map<String, Double> getAllGrades() {
         return new HashMap<>(assessmentScores);
     }
+
+    /**
+     * Retrieves all assessment weights.
+     *
+     * @return A new Map containing all assessment names and their corresponding weights.
+     *         If no weights have been set, returns an empty Map.
+     */
+    public Map<String, Double> getAllWeights() {
+        return new HashMap<>(assessmentWeights);
+    }
 }
