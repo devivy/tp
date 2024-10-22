@@ -33,10 +33,10 @@ class JsonSerializableGradingSystem {
      */
     public JsonSerializableGradingSystem(GradingSystem source) {
         grades.addAll(source.getAllGrades().entrySet().stream()
-                              .map(entry -> new JsonAdaptedGrade(new Grade(entry.getKey(), entry.getValue(),
-                                                                           source.getAllWeights()
-                                                                                   .getOrDefault(entry.getKey(),
-                                                                                                 1.0))))
+                              .map(entry -> new JsonAdaptedGrade(
+                                      new Grade(entry.getKey(), entry.getValue(),
+                                                source.getAllWeights().getOrDefault(entry.getKey(),
+                                                                                    1.0))))
                               .collect(Collectors.toList()));
     }
 

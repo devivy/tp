@@ -21,45 +21,32 @@ public class Grade {
      * @throws IllegalArgumentException if any of the parameters are invalid.
      */
     public Grade(String assessmentName, double scorePercentage, double weight) {
+        if (assessmentName == null || assessmentName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Assessment name cannot be null or empty.");
+        }
+        if (scorePercentage < 0 || scorePercentage > 100) {
+            throw new IllegalArgumentException("Score percentage must be between 0 and 100.");
+        }
+        if (weight < 0 || weight > 1) {
+            throw new IllegalArgumentException("Weight must be between 0 and 1.");
+        }
         this.assessmentName = assessmentName;
         this.scorePercentage = scorePercentage;
         this.weight = weight;
     }
 
-    /**
-     * Returns the name of the assessment.
-     *
-     * @return The assessment name.
-     */
     public String getAssessmentName() {
         return assessmentName;
     }
 
-    /**
-     * Returns the score as a percentage.
-     *
-     * @return The score percentage, a value between 0 and 100.
-     */
     public double getScorePercentage() {
         return scorePercentage;
     }
 
-    /**
-     * Returns the weight of this grade.
-     *
-     * @return The weight of the grade, a value between 0 and 1.
-     */
     public double getWeight() {
         return weight;
     }
 
-    /**
-     * Indicates whether some other object is "equal to" this one.
-     * The equality is based on the assessment name, score percentage, and weight.
-     *
-     * @param o the reference object with which to compare.
-     * @return true if this object is the same as the obj argument; false otherwise.
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,22 +57,11 @@ public class Grade {
                 Objects.equals(assessmentName, grade.assessmentName);
     }
 
-    /**
-     * Returns a hash code value for the object.
-     * This method is supported for the benefit of hash tables such as those provided by HashMap.
-     *
-     * @return a hash code value for this object.
-     */
     @Override
     public int hashCode() {
         return Objects.hash(assessmentName, scorePercentage, weight);
     }
 
-    /**
-     * Returns a string representation of the Grade.
-     *
-     * @return a string representation of the Grade.
-     */
     @Override
     public String toString() {
         return String.format("Grade{assessmentName='%s', scorePercentage=%.2f, weight=%.2f}",
