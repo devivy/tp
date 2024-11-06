@@ -47,6 +47,7 @@
         "ui-component": "UI component",
         "logic-component": "Logic component",
         "model-component": "Model component",
+        "course-component": "Course component",
         "storage-component": "Storage component",
         "common-classes": "Common classes",
         "implementation": "Implementation",
@@ -64,6 +65,7 @@
         "appendix-instructions-for-manual-testing": "Appendix: Instructions for manual testing",
         "launch-and-shutdown": "Launch and shutdown",
         "deleting-a-person": "Deleting a person",
+        "enrolling-a-student-into-a-course-and-tutorial": "Enrolling a student into a course and tutorial",
         "saving-data": "Saving data"
       },
       "headingKeywords": {}
@@ -117,6 +119,7 @@
         "editing-a-person-edit": "Editing a person : edit",
         "locating-persons-by-name-find": "Locating persons by name: find",
         "deleting-a-person-delete": "Deleting a person : delete",
+        "adding-a-course-course-add": "Adding a course: course-add",
         "clearing-all-entries-clear": "Clearing all entries : clear",
         "exiting-the-program-exit": "Exiting the program : exit",
         "saving-the-data": "Saving the data",
