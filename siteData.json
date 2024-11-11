@@ -66,7 +66,8 @@
         "adding-deleting-and-editing-courses": "Adding, Deleting, and Editing courses",
         "enrolling-a-student-into-a-course-and-tutorial": "Enrolling a student into a course and tutorial",
         "managing-attendance": "Managing Attendance",
-        "saving-data": "Saving data"
+        "saving-data": "Saving data",
+        "appendix-planned-enhancements": "Appendix: Planned Enhancements"
       },
       "headingKeywords": {}
     },
@@ -118,6 +119,7 @@
         "main-commands": "Main Commands",
         "student-commands": "Student Commands",
         "course-commands": "Course Commands",
+        "enrollment-commands": "Enrollment Commands",
         "attendance-commands": "Attendance Commands",
         "data": "Data",
         "future": "Future",
