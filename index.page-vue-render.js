@@ -29,6 +29,6 @@ with(this){return _c('h2',{attrs:{"id":"acknowledgements"}},[_c('span',{staticCl
 with(this){return _c('ul',[_c('li',[_v("This project is built on the AddressBook-Level3 (AB3) project created by the "),_c('a',{attrs:{"href":"https://se-education.org"}},[_v("SE-EDU initiative")]),_v(".")]),_v(" "),_c('li',[_v("Libraries used: "),_c('a',{attrs:{"href":"https://openjfx.io/"}},[_v("JavaFX")]),_v(", "),_c('a',{attrs:{"href":"https://github.com/FasterXML/jackson"}},[_v("Jackson")]),_v(", "),_c('a',{attrs:{"href":"https://github.com/junit-team/junit5"}},[_v("JUnit5")])])])}
 },function anonymous(
 ) {
-with(this){return _c('footer',[_c('div',{staticClass:"text-center"},[_c('small',[_v("["),_c('span',[_c('strong',[_v("Powered by")])]),_v(" "),_c('img',{attrs:{"src":"https://markbind.org/favicon.ico","width":"30"}}),_v(" "),_c('a',{attrs:{"href":"https://markbind.org/"}},[_v("MarkBind 5.5.3")]),_v(", generated on Mon, 11 Nov 2024, 21:10:00 GMT+8]")])])])}
+with(this){return _c('footer',[_c('div',{staticClass:"text-center"},[_c('small',[_v("["),_c('span',[_c('strong',[_v("Powered by")])]),_v(" "),_c('img',{attrs:{"src":"https://markbind.org/favicon.ico","width":"30"}}),_v(" "),_c('a',{attrs:{"href":"https://markbind.org/"}},[_v("MarkBind 5.5.3")]),_v(", generated on Mon, 11 Nov 2024, 21:53:49 GMT+8]")])])])}
 }];
   
