@@ -2,6 +2,7 @@ package tahub.contacts.logic.commands.course;
 
 import static java.util.Objects.requireNonNull;
 import static tahub.contacts.logic.parser.CliSyntax.PREFIX_COURSE_CODE;
+import static tahub.contacts.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import tahub.contacts.commons.util.ToStringBuilder;
 import tahub.contacts.logic.Messages;
@@ -12,6 +13,8 @@ import tahub.contacts.model.Model;
 import tahub.contacts.model.course.Course;
 import tahub.contacts.model.course.CourseCode;
 import tahub.contacts.model.course.UniqueCourseList;
+import tahub.contacts.model.studentcourseassociation.StudentCourseAssociation;
+import tahub.contacts.model.studentcourseassociation.StudentCourseAssociationList;
 
 /**
  * Deletes a course identified using it's course code in the unique course list of address book.
@@ -48,7 +51,21 @@ public class CourseDeleteCommand extends Command {
         }
 
         Course courseToDelete = courseList.getCourseWithCourseCode(courseCode);
+
+        // Get all SCAs and remove those associated with this course
+        StudentCourseAssociationList scaList = model.getScaList();
+        for (StudentCourseAssociation sca : scaList.get()) {
+            if (sca.getCourse().equals(courseToDelete)) {
+                model.deleteSca(sca);
+            }
+        }
+
+        // Delete the course
         model.deleteCourse(courseToDelete);
+
+        // Refresh the person list to update UI
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
         return new CommandResult(String.format(MESSAGE_DELETE_COURSE_SUCCESS, Messages.format(courseToDelete)));
     }
 

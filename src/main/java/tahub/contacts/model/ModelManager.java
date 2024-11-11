@@ -4,7 +4,9 @@ import static java.util.Objects.requireNonNull;
 import static tahub.contacts.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -108,10 +110,25 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void deleteCourse(Course target) {
-        courseList.remove(target);
-        if (scaList != null) {
-            scaList.remove(target);
+    public void deleteCourse(Course course) {
+        requireNonNull(course);
+
+        // First get all persons affected by this course deletion
+        Set<Person> affectedPersons = new HashSet<> ();
+        for (StudentCourseAssociation sca : scaList.get()) {
+            if (sca.getCourse().equals(course)) {
+                affectedPersons.add(sca.getStudent());
+            }
+        }
+
+        courseList.remove(course);
+
+        // Remove all SCAs for this course
+        scaList.remove(course);
+
+        // Force refresh of all affected persons
+        for (Person person : affectedPersons) {
+            setPerson(person, person);
         }
     }
 
@@ -212,8 +229,10 @@ public class ModelManager implements Model {
 
     @Override
     public void deleteSca(StudentCourseAssociation target) {
+        requireNonNull(target);
         scaList.remove(target);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        Person personToRefresh = target.getStudent();
+        setPerson(personToRefresh, personToRefresh);
     }
 
     @Override
