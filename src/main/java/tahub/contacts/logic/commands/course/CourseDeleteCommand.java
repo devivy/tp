@@ -20,12 +20,15 @@ import tahub.contacts.model.studentcourseassociation.StudentCourseAssociationLis
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Deletes a course identified using it's course code in the unique course list of address book.
+ */
 public class CourseDeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "course-delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the course identified by its course code.\n"
+            + ": Deletes the person identified by its course code.\n"
             + "Parameters: " + PREFIX_COURSE_CODE + "COURSE_CODE (must be course code of an existing course)\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_COURSE_CODE + "CS1101S ";
 
@@ -33,8 +36,12 @@ public class CourseDeleteCommand extends Command {
 
     private final CourseCode courseCode;
 
+    /**
+     * Creates a DeleteCourseCommand to delete the specified {@code Course}
+     *
+     * @param courseCode of the course to be deleted
+     */
     public CourseDeleteCommand(CourseCode courseCode) {
-        requireNonNull(courseCode);
         this.courseCode = courseCode;
     }
 
