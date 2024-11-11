@@ -2,21 +2,21 @@ package tahub.contacts.logic.commands.course;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import static tahub.contacts.logic.parser.CliSyntax.PREFIX_COURSE_CODE;
 import static tahub.contacts.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import tahub.contacts.commons.util.ToStringBuilder;
+import java.util.HashSet;
+import java.util.Set;
 
+
+import tahub.contacts.commons.util.ToStringBuilder;
 import tahub.contacts.logic.commands.Command;
-import tahub.contacts.logic.commands.CommandResult;
 import tahub.contacts.logic.Messages;
+import tahub.contacts.logic.commands.CommandResult;
 import tahub.contacts.logic.commands.exceptions.CommandException;
 import tahub.contacts.model.course.Course;
-import tahub.contacts.model.course.CourseCode;
 import tahub.contacts.model.Model;
+import tahub.contacts.model.course.CourseCode;
 import tahub.contacts.model.course.UniqueCourseList;
 import tahub.contacts.model.person.Person;
 import tahub.contacts.model.studentcourseassociation.StudentCourseAssociation;
