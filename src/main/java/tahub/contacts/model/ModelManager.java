@@ -114,7 +114,7 @@ public class ModelManager implements Model {
         requireNonNull(course);
 
         // First get all persons affected by this course deletion
-        Set<Person> affectedPersons = new HashSet<> ();
+        Set<Person> affectedPersons = new HashSet<>();
         for (StudentCourseAssociation sca : scaList.get()) {
             if (sca.getCourse().equals(course)) {
                 affectedPersons.add(sca.getStudent());
