@@ -13,18 +13,19 @@ import tahub.contacts.model.Model;
 import tahub.contacts.model.course.Course;
 import tahub.contacts.model.course.CourseCode;
 import tahub.contacts.model.course.UniqueCourseList;
+import tahub.contacts.model.person.Person;
 import tahub.contacts.model.studentcourseassociation.StudentCourseAssociation;
 import tahub.contacts.model.studentcourseassociation.StudentCourseAssociationList;
 
-/**
- * Deletes a course identified using it's course code in the unique course list of address book.
- */
+import java.util.HashSet;
+import java.util.Set;
+
 public class CourseDeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "course-delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by its course code.\n"
+            + ": Deletes the course identified by its course code.\n"
             + "Parameters: " + PREFIX_COURSE_CODE + "COURSE_CODE (must be course code of an existing course)\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_COURSE_CODE + "CS1101S ";
 
@@ -32,12 +33,8 @@ public class CourseDeleteCommand extends Command {
 
     private final CourseCode courseCode;
 
-    /**
-     * Creates a DeleteCourseCommand to delete the specified {@code Course}
-     *
-     * @param courseCode of the course to be deleted
-     */
     public CourseDeleteCommand(CourseCode courseCode) {
+        requireNonNull(courseCode);
         this.courseCode = courseCode;
     }
 
@@ -52,8 +49,18 @@ public class CourseDeleteCommand extends Command {
 
         Course courseToDelete = courseList.getCourseWithCourseCode(courseCode);
 
-        // Get all SCAs and remove those associated with this course
+        // Get all persons affected by this course deletion
+        Set<Person> affectedPersons = new HashSet<>();
         StudentCourseAssociationList scaList = model.getScaList();
+
+        // First collect all affected persons
+        for (StudentCourseAssociation sca : scaList.get()) {
+            if (sca.getCourse().equals(courseToDelete)) {
+                affectedPersons.add(sca.getStudent());
+            }
+        }
+
+        // Remove all SCAs for this course
         for (StudentCourseAssociation sca : scaList.get()) {
             if (sca.getCourse().equals(courseToDelete)) {
                 model.deleteSca(sca);
@@ -63,10 +70,16 @@ public class CourseDeleteCommand extends Command {
         // Delete the course
         model.deleteCourse(courseToDelete);
 
-        // Refresh the person list to update UI
+        // Force refresh of all affected persons
+        for (Person person : affectedPersons) {
+            model.setPerson(person, person);
+        }
+
+        // Final UI refresh
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(String.format(MESSAGE_DELETE_COURSE_SUCCESS, Messages.format(courseToDelete)));
+        return new CommandResult(String.format(MESSAGE_DELETE_COURSE_SUCCESS,
+                                               Messages.format(courseToDelete)));
     }
 
     @Override

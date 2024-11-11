@@ -17,10 +17,12 @@ import tahub.contacts.model.course.Course;
 import tahub.contacts.model.course.CourseCode;
 import tahub.contacts.model.course.CourseName;
 import tahub.contacts.model.course.UniqueCourseList;
+import tahub.contacts.model.studentcourseassociation.StudentCourseAssociationList;
 
 public class CoursePersonDeleteCommandTest {
 
-    private Model model = new ModelManager(new AddressBook(), new UserPrefs(), new UniqueCourseList(), null);
+    private final StudentCourseAssociationList scaList = new StudentCourseAssociationList();
+    private Model model = new ModelManager(new AddressBook(), new UserPrefs(), new UniqueCourseList(), scaList);
 
     @Test
     public void execute_validCourseCodeUnfilteredList_success() {
@@ -30,8 +32,12 @@ public class CoursePersonDeleteCommandTest {
 
         String expectedMessage = String.format(CourseDeleteCommand.MESSAGE_DELETE_COURSE_SUCCESS, courseToDelete);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new UserPrefs(), new UniqueCourseList(), null);
+        Model expectedModel = new ModelManager(
+                new AddressBook(model.getAddressBook()),
+                new UserPrefs(),
+                new UniqueCourseList(),
+                new StudentCourseAssociationList() // Initialize with new empty SCA list
+        );
 
         assertCommandSuccess(courseDeleteCommand, model, expectedMessage, expectedModel);
     }

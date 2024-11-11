@@ -210,8 +210,15 @@ public class ModelManagerTest {
 
     @Test
     public void deleteSca_scaInScaList_deletesSca() {
+        // First add the person and course that are part of the SCA
+        modelManager.addPerson(ALICE);
+        modelManager.addCourse(course);
+
+        // Now add and delete the SCA
         modelManager.addSca(sca);
         modelManager.deleteSca(sca);
+
+        // Verify the SCA is deleted
         assertFalse(modelManager.hasSca(sca));
     }
 

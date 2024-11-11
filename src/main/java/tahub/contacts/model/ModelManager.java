@@ -187,7 +187,6 @@ public class ModelManager implements Model {
     @Override
     public void setPerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
-
         addressBook.setPerson(target, editedPerson);
     }
 
@@ -230,14 +229,38 @@ public class ModelManager implements Model {
     @Override
     public void deleteSca(StudentCourseAssociation target) {
         requireNonNull(target);
+        // Get the student before deleting the SCA
+        Person student = target.getStudent();
+        // Remove the SCA
         scaList.remove(target);
-        Person personToRefresh = target.getStudent();
-        setPerson(personToRefresh, personToRefresh);
+        // Force UI refresh by updating the student
+        Person refreshedStudent = new Person(
+                student.getMatricNumber(),
+                student.getName(),
+                student.getPhone(),
+                student.getEmail(),
+                student.getAddress(),
+                student.getTags()
+        );
+        addressBook.setPerson(student, refreshedStudent);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
     public void addSca(StudentCourseAssociation sca) {
+        requireNonNull(sca);
         scaList.add(sca);
+        // Force UI refresh for the affected student
+        Person student = sca.getStudent();
+        Person refreshedStudent = new Person(
+                student.getMatricNumber(),
+                student.getName(),
+                student.getPhone(),
+                student.getEmail(),
+                student.getAddress(),
+                student.getTags()
+        );
+        addressBook.setPerson(student, refreshedStudent);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
